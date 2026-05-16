@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flood Detection Prototype</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <section class="gallery-section">
+        <div class="container">
+            <a href="../../index.html" class="project-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+            <h2 class="section-title">Flood Detection Prototype</h2>
+            <p class="section-description">Browse the project images below. Click any picture to open it in a larger view.</p>
+            <div class="gallery-grid">
+                <div class="gallery-item" data-image="03c50dd8-6942-4eae-ac8a-1ce37b17142a.jpg">
+                    <img src="03c50dd8-6942-4eae-ac8a-1ce37b17142a.jpg" alt="Flood Detection Prototype screenshot 1">
+                    <p>Prototype dashboard view with flood hazard visualization.</p>
+                </div>
+                <div class="gallery-item" data-image="8c1e6d2c-64fc-4a03-b17a-47f4fe8cce13.jpg">
+                    <img src="8c1e6d2c-64fc-4a03-b17a-47f4fe8cce13.jpg" alt="Flood Detection Prototype screenshot 2">
+                    <p>Detailed analytics and alert preview screen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <img id="lightboxImage" src="" alt="Expanded project image">
+    </div>
+
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const imageSrc = item.getAttribute('data-image');
+                lightboxImage.src = imageSrc;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+            lightboxImage.src = '';
+        });
+
+        lightbox.addEventListener('click', (event) => {
+            if (event.target === lightbox) {
+                lightbox.classList.remove('active');
+                lightboxImage.src = '';
+            }
+        });
+    </script>
+</body>
+</html>

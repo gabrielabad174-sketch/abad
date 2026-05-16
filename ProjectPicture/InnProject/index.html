@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inn Project</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <section class="gallery-section">
+        <div class="container">
+            <a href="../../index.html" class="project-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+            <h2 class="section-title">Inn Project</h2>
+            <p class="section-description">Browse the project's images below. Click any picture to open it in a larger view.</p>
+            <div class="gallery-grid">
+                <div class="gallery-item" data-image="InnProject.png">
+                    <img src="InnProject.png" alt="Inn Project main design image">
+                    <p>Main interface concept for the inn booking experience.</p>
+                </div>
+                <div class="gallery-item" data-image="Screenshot%202026-05-16%20145321.png">
+                    <img src="Screenshot%202026-05-16%20145321.png" alt="Inn Project screenshot 1">
+                    <p>Guest booking and search screen.</p>
+                </div>
+                <div class="gallery-item" data-image="Screenshot%202026-05-16%20145330.png">
+                    <img src="Screenshot%202026-05-16%20145330.png" alt="Inn Project screenshot 2">
+                    <p>Room selection and details layout.</p>
+                </div>
+                <div class="gallery-item" data-image="Screenshot%202026-05-16%20145342.png">
+                    <img src="Screenshot%202026-05-16%20145342.png" alt="Inn Project screenshot 3">
+                    <p>Booking confirmation and guest information view.</p>
+                </div>
+                <div class="gallery-item" data-image="Screenshot%202026-05-16%20145351.png">
+                    <img src="Screenshot%202026-05-16%20145351.png" alt="Inn Project screenshot 4">
+                    <p>Visual details for the guest experience page.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <img id="lightboxImage" src="" alt="Expanded project image">
+    </div>
+
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImage = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const imageSrc = item.getAttribute('data-image');
+                lightboxImage.src = imageSrc;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+            lightboxImage.src = '';
+        });
+
+        lightbox.addEventListener('click', (event) => {
+            if (event.target === lightbox) {
+                lightbox.classList.remove('active');
+                lightboxImage.src = '';
+            }
+        });
+    </script>
+</body>
+</html>
