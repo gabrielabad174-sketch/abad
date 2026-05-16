@@ -1,262 +1,224 @@
 'use client'
 
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import Image from 'next/image'
-import { Menu, X, Github, Linkedin, Mail, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
+import { Menu, X, ArrowRight } from 'lucide-react'
 import floodImage from '../ProjectPicture/FloodDetectionPrototype/03c50dd8-6942-4eae-ac8a-1ce37b17142a.jpg'
 import innImage from '../ProjectPicture/InnProject/InnProject.png'
+import aboutPhoto from '../Abad1.jpg'
+
+const projects = [
+  {
+    title: 'Flood Detection Prototype',
+    description: 'Machine learning-based flood detection prototype with visual data analysis and alert previews.',
+    href: '/project-picture/flood-detection-prototype',
+    image: floodImage,
+  },
+  {
+    title: 'Inn Project',
+    description: 'Hotel and inn interface concept with design screens and booking experience visuals.',
+    href: '/project-picture/inn-project',
+    image: innImage,
+  },
+]
 
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [formState, setFormState] = useState({ name: '', email: '', message: '' })
+  const [statusMessage, setStatusMessage] = useState('')
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
-    element?.scrollIntoView({ behavior: 'smooth' })
+    element?.scrollIntoView({ behavior: 'smooth', block: 'start' })
     setMenuOpen(false)
   }
 
+  const handleInput = (field: string, value: string) => {
+    setFormState(prev => ({ ...prev, [field]: value }))
+  }
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const { name, email, message } = formState
+
+    if (!name || !email || !message) {
+      setStatusMessage('Please fill in all fields')
+      return
+    }
+
+    setStatusMessage('Thank you for your message! I will get back to you soon.')
+    setFormState({ name: '', email: '', message: '' })
+  }
+
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-hidden">
-      {/* Animated background elements */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-40 right-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse delay-1000" />
-        <div className="absolute top-1/2 right-1/4 w-80 h-80 bg-secondary/5 rounded-full blur-3xl animate-pulse delay-500" />
+    <div className="relative min-h-screen overflow-x-hidden bg-[#09090f] text-white">
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute top-24 left-10 h-72 w-72 rounded-full bg-blue-900/40 blur-3xl animate-pulse" />
+        <div className="absolute bottom-32 right-16 h-96 w-96 rounded-full bg-sky-900/30 blur-3xl animate-pulse delay-500" />
+        <div className="absolute top-1/3 right-1/4 h-80 w-80 rounded-full bg-slate-900/70 blur-3xl animate-pulse delay-1000" />
       </div>
 
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-background/70 backdrop-blur-xl border-b border-border/40 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-          <div className="text-xl font-bold tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Alex Developer</div>
-          
+      <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+          <div className="text-xl font-bold text-blue-500">Gabriel.</div>
           <button
+            type="button"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2 hover:bg-card rounded-lg transition"
+            className="md:hidden rounded-lg border border-white/10 bg-slate-900/80 p-2 text-white transition hover:bg-slate-900"
           >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
-
-          <div className="hidden md:flex gap-12 text-sm">
-            <button
-              onClick={() => scrollToSection('about')}
-              className="hover:text-primary transition font-medium"
-            >
-              ABOUT
-            </button>
-            <button
-              onClick={() => scrollToSection('projects')}
-              className="hover:text-primary transition font-medium"
-            >
-              PROJECTS
-            </button>
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="hover:text-primary transition font-medium"
-            >
-              CONTACT
-            </button>
+          <div className="hidden items-center gap-10 text-sm font-medium text-slate-300 md:flex">
+            <button onClick={() => scrollToSection('home')} className="transition hover:text-blue-400">Home</button>
+            <button onClick={() => scrollToSection('about')} className="transition hover:text-blue-400">About</button>
+            <button onClick={() => scrollToSection('projects')} className="transition hover:text-blue-400">Projects</button>
+            <button onClick={() => scrollToSection('skills')} className="transition hover:text-blue-400">Skills</button>
+            <button onClick={() => scrollToSection('contact')} className="transition hover:text-blue-400">Contact</button>
           </div>
         </div>
-
         {menuOpen && (
-          <div className="md:hidden bg-card border-t border-border py-4">
-            <div className="max-w-6xl mx-auto px-6 flex flex-col gap-4">
-              <button
-                onClick={() => scrollToSection('about')}
-                className="hover:text-primary transition text-left font-medium"
-              >
-                ABOUT
-              </button>
-              <button
-                onClick={() => scrollToSection('projects')}
-                className="hover:text-primary transition text-left font-medium"
-              >
-                PROJECTS
-              </button>
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="hover:text-primary transition text-left font-medium"
-              >
-                CONTACT
-              </button>
+          <div className="border-t border-white/10 bg-slate-950/95 px-6 py-4 text-slate-300 md:hidden">
+            <div className="flex flex-col gap-3">
+              <button onClick={() => scrollToSection('home')} className="text-left transition hover:text-blue-400">Home</button>
+              <button onClick={() => scrollToSection('about')} className="text-left transition hover:text-blue-400">About</button>
+              <button onClick={() => scrollToSection('projects')} className="text-left transition hover:text-blue-400">Projects</button>
+              <button onClick={() => scrollToSection('skills')} className="text-left transition hover:text-blue-400">Skills</button>
+              <button onClick={() => scrollToSection('contact')} className="text-left transition hover:text-blue-400">Contact</button>
             </div>
           </div>
         )}
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative pt-48 pb-32 px-6 z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="space-y-8 animate-in fade-in duration-1000">
-            <div>
-              <div className="inline-block mb-6 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full">
-                <span className="text-sm font-semibold text-primary">Welcome to my portfolio</span>
-              </div>
-              <h1 className="text-6xl md:text-7xl font-bold leading-tight tracking-tight mb-6 bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent">
-                Crafting beautiful digital experiences
-              </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl leading-relaxed">
-                I&apos;m a full-stack developer passionate about building elegant, performant web applications that solve real problems. Currently focused on modern frontend architecture and user experience.
+      <main className="pt-24">
+        <section id="home" className="flex min-h-[78vh] items-center px-6">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center text-center md:items-start md:text-left">
+            <h1 className="text-4xl font-semibold text-white sm:text-5xl md:text-6xl lg:text-7xl">Hi, I&apos;m Gabriel Abad</h1>
+            <p className="mt-6 text-xl font-semibold text-blue-400">Web Developer & Designer</p>
+            <p className="mt-4 max-w-2xl text-base leading-8 text-slate-300 sm:text-lg">I create beautiful and functional websites that help businesses grow</p>
+            <button
+              type="button"
+              onClick={() => scrollToSection('contact')}
+              className="mt-10 rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white transition hover:bg-blue-500"
+            >
+              Get In Touch
+            </button>
+          </div>
+        </section>
+
+        <section id="about" className="border-t border-white/10 px-6 py-24">
+          <div className="mx-auto grid max-w-6xl gap-16 lg:grid-cols-[1.2fr_0.8fr] xl:gap-24">
+            <div className="space-y-8">
+              <h2 className="text-3xl font-bold text-white sm:text-4xl">About Me</h2>
+              <p className="text-slate-300 leading-8">
+                I&apos;m a passionate web developer with a love for creating clean, modern websites. I started my journey in web development and have been learning new technologies every day.
+              </p>
+              <p className="text-slate-300 leading-8">
+                My focus is on building responsive, user-friendly interfaces that look great on all devices. I love turning ideas into reality through code.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-4 pt-8">
-              <button
-                onClick={() => scrollToSection('projects')}
-                className="px-8 py-4 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-semibold rounded-lg hover:shadow-lg hover:shadow-primary/50 transition flex items-center gap-2 w-fit"
-              >
-                View My Work <ArrowRight size={20} />
-              </button>
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="px-8 py-4 border border-primary/50 text-primary font-semibold rounded-lg hover:bg-primary/10 transition backdrop-blur"
-              >
-                Get In Touch
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="relative py-24 px-6 border-t border-border/40 z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-3 gap-16 items-start">
-            <div className="lg:col-span-1">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">About</h2>
-              <div className="space-y-6 text-muted-foreground">
-                <p>
-                  I&apos;m a self-taught web developer with 4+ years of experience building web applications. I specialize in React, Next.js, and modern JavaScript.
-                </p>
-                <div className="flex items-center gap-4">
-                  <a href="#" className="p-3 bg-card hover:bg-primary/20 border border-border/50 hover:border-primary/50 rounded-lg transition">
-                    <Github size={20} />
-                  </a>
-                  <a href="#" className="p-3 bg-card hover:bg-primary/20 border border-border/50 hover:border-primary/50 rounded-lg transition">
-                    <Linkedin size={20} />
-                  </a>
-                  <a href="#" className="p-3 bg-card hover:bg-primary/20 border border-border/50 hover:border-primary/50 rounded-lg transition">
-                    <Mail size={20} />
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:col-span-2">
-              <div className="space-y-8">
-                <div className="relative border-l-2 border-primary/30 hover:border-primary/80 pl-8 pb-8 transition">
-                  <div className="absolute -left-2 top-0 w-3 h-3 bg-primary rounded-full" />
-                  <h3 className="text-accent font-semibold text-sm mb-3 uppercase tracking-wide">Experience</h3>
-                  <h4 className="text-2xl font-bold mb-2">Senior Frontend Engineer</h4>
-                  <p className="text-muted-foreground mb-4 text-sm">2022 - Present</p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Led development of customer-facing applications, improved performance metrics by 40%, and mentored junior developers. Built scalable component libraries and implemented modern design systems.
-                  </p>
-                </div>
-
-                <div className="relative border-l-2 border-primary/30 hover:border-primary/80 pl-8 pb-8 transition">
-                  <div className="absolute -left-2 top-0 w-3 h-3 bg-accent rounded-full" />
-                  <h3 className="text-accent font-semibold text-sm mb-3 uppercase tracking-wide">Previous Role</h3>
-                  <h4 className="text-2xl font-bold mb-2">Full Stack Developer</h4>
-                  <p className="text-muted-foreground mb-4 text-sm">2020 - 2022</p>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Developed full-stack features for SaaS products, collaborated with design teams, and optimized database queries resulting in 50% faster load times.
-                  </p>
-                </div>
+            <div className="overflow-hidden rounded-[32px] border border-white/10 bg-slate-950/90 shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
+              <div className="relative aspect-[4/3] w-full">
+                <Image src={aboutPhoto} alt="Gabriel Abad" fill className="object-cover" />
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Projects Section */}
-      <section id="projects" className="relative py-24 px-6 border-t border-border/40 z-10">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-16">Projects</h2>
-          <div className="space-y-8">
-            {[
-              {
-                title: 'Flood Detection Prototype',
-                description: 'A flood detection project with visual data analysis, alert previews, and real-time monitoring concept screens.',
-                tech: ['React', 'Next.js', 'Tailwind CSS', 'Data Visualization'],
-                image: floodImage,
-              },
-              {
-                title: 'Inn Project',
-                description: 'A hotel and inn interface concept with booking screens, guest flows, and high-fidelity design visuals.',
-                tech: ['Design Systems', 'Next.js', 'Tailwind CSS', 'UI/UX'],
-                image: innImage,
-              },
-            ].map((project, i) => (
-              <div key={i} className="group">
-                <div className="relative border border-border/40 rounded-xl p-8 hover:border-primary/50 bg-card/50 hover:bg-card/80 transition-all duration-300 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="relative grid lg:grid-cols-3 gap-8 items-start">
-                    <div className="lg:col-span-2">
-                      <h3 className="text-3xl font-bold mb-4 group-hover:text-primary transition">{project.title}</h3>
-                      <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-3">
-                        {project.tech.map((tech, j) => (
-                          <span
-                            key={j}
-                            className="px-4 py-2 bg-primary/15 text-primary border border-primary/30 rounded-full text-sm font-medium group-hover:bg-primary/25 group-hover:border-primary/60 transition"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="relative h-56 rounded-lg border border-border/40 overflow-hidden bg-card/40">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
+        <section id="projects" className="border-t border-white/10 px-6 py-24">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="text-3xl font-bold text-white sm:text-4xl">My Projects</h2>
+            <div className="mt-12 grid gap-8 lg:grid-cols-2">
+              {projects.map((project) => (
+                <div key={project.title} className="overflow-hidden rounded-[32px] border border-white/10 bg-slate-950/90 shadow-[0_24px_80px_rgba(0,0,0,0.18)] transition hover:border-blue-500/30 hover:shadow-[0_30px_90px_rgba(0,102,255,0.25)]">
+                  <div className="relative h-64 w-full">
+                    <Image src={project.image} alt={project.title} fill className="object-cover" />
+                  </div>
+                  <div className="space-y-4 p-8">
+                    <h3 className="text-2xl font-semibold text-white">{project.title}</h3>
+                    <p className="text-slate-300 leading-7">{project.description}</p>
+                    <Link href={project.href} className="inline-flex items-center text-blue-400 hover:text-blue-300 font-semibold">
+                      View Pictures →
+                    </Link>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="skills" className="border-t border-white/10 px-6 py-24">
+          <div className="mx-auto max-w-6xl">
+            <h2 className="text-3xl font-bold text-white sm:text-4xl">Skills</h2>
+            <div className="mt-12 grid gap-6 md:grid-cols-2">
+              {[
+                { title: 'HTML & CSS', value: 90 },
+                { title: 'JavaScript', value: 75 },
+                { title: 'Responsive Design', value: 85 },
+                { title: 'Web Design', value: 80 },
+              ].map((skill) => (
+                <div key={skill.title} className="rounded-[24px] border border-white/10 bg-slate-950/90 p-8">
+                  <div className="flex items-center justify-between gap-4">
+                    <h3 className="text-lg font-semibold text-white">{skill.title}</h3>
+                    <span className="text-sm font-medium text-slate-400">{skill.value}%</span>
+                  </div>
+                  <div className="mt-4 h-4 overflow-hidden rounded-full bg-white/10">
+                    <div className="h-full rounded-full bg-blue-500 transition-all" style={{ width: `${skill.value}%` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="border-t border-white/10 px-6 py-24">
+          <div className="mx-auto max-w-4xl text-center">
+            <span className="inline-block rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-sm font-semibold text-blue-300">Get In Touch</span>
+            <h2 className="mt-6 text-3xl font-bold text-white sm:text-4xl">Let&apos;s work together</h2>
+            <p className="mt-6 text-slate-300 leading-relaxed">
+              I&apos;m always open to discussing new projects, creative ideas, or opportunities. Feel free to reach out.
+            </p>
+            <form onSubmit={handleSubmit} className="mt-12 grid gap-6 text-left">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <input
+                  value={formState.name}
+                  onChange={(event) => handleInput('name', event.target.value)}
+                  type="text"
+                  placeholder="Your Name"
+                  className="w-full rounded-2xl border border-white/10 bg-slate-950/90 px-5 py-4 text-white outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                />
+                <input
+                  value={formState.email}
+                  onChange={(event) => handleInput('email', event.target.value)}
+                  type="email"
+                  placeholder="Your Email"
+                  className="w-full rounded-2xl border border-white/10 bg-slate-950/90 px-5 py-4 text-white outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                />
               </div>
-            ))}
+              <textarea
+                value={formState.message}
+                onChange={(event) => handleInput('message', event.target.value)}
+                placeholder="Your Message"
+                rows={5}
+                className="w-full rounded-2xl border border-white/10 bg-slate-950/90 px-5 py-4 text-white outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+              />
+              <button
+                type="submit"
+                className="mx-auto rounded-2xl bg-blue-600 px-10 py-4 text-base font-semibold text-white transition hover:bg-blue-500"
+              >
+                Send Message
+              </button>
+              {statusMessage && <p className="text-center text-slate-300">{statusMessage}</p>}
+            </form>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="relative py-24 px-6 border-t border-border/40 z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="mb-8 inline-block px-4 py-2 bg-accent/10 border border-accent/20 rounded-full">
-            <span className="text-sm font-semibold text-accent">Get in touch</span>
+        <footer className="border-t border-white/10 px-6 py-12">
+          <div className="mx-auto max-w-6xl text-center text-sm text-slate-400">
+            <p>© 2024 Gabriel Abad. All rights reserved.</p>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-8 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Let&apos;s work together</h2>
-          <p className="text-xl text-muted-foreground mb-16 max-w-2xl mx-auto leading-relaxed">
-            I&apos;m always open to discussing new projects, creative ideas, or opportunities. Feel free to reach out.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="mailto:hello@example.com"
-              className="px-8 py-4 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground font-semibold rounded-lg hover:shadow-lg hover:shadow-primary/50 transition flex items-center justify-center gap-2"
-            >
-              <Mail size={20} /> Send me an email
-            </a>
-            <a
-              href="#"
-              className="px-8 py-4 border border-primary/50 text-primary font-semibold rounded-lg hover:bg-primary/10 transition flex items-center justify-center gap-2 backdrop-blur"
-            >
-              <Github size={20} /> View my GitHub
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="relative border-t border-border/40 py-12 px-6 z-10">
-        <div className="max-w-7xl mx-auto text-center text-muted-foreground text-sm">
-          <p>© 2024 Alex Developer. Designed and built by me.</p>
-        </div>
-      </footer>
+        </footer>
+      </main>
     </div>
   )
 }
