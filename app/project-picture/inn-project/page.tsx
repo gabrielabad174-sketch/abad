@@ -2,11 +2,11 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import innMain from '../../../../ProjectPicture/InnProject/InnProject.png'
-import screenshot1 from '../../../../ProjectPicture/InnProject/Screenshot 2026-05-16 145321.png'
-import screenshot2 from '../../../../ProjectPicture/InnProject/Screenshot 2026-05-16 145330.png'
-import screenshot3 from '../../../../ProjectPicture/InnProject/Screenshot 2026-05-16 145342.png'
-import screenshot4 from '../../../../ProjectPicture/InnProject/Screenshot 2026-05-16 145351.png'
+import innMain from '../../../ProjectPicture/InnProject/InnProject.png'
+import screenshot1 from '../../../ProjectPicture/InnProject/Screenshot 2026-05-16 145321.png'
+import screenshot2 from '../../../ProjectPicture/InnProject/Screenshot 2026-05-16 145330.png'
+import screenshot3 from '../../../ProjectPicture/InnProject/Screenshot 2026-05-16 145342.png'
+import screenshot4 from '../../../ProjectPicture/InnProject/Screenshot 2026-05-16 145351.png'
 
 export default function InnProjectPage() {
   const images = [

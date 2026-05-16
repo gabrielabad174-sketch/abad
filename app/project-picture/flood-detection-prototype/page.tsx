@@ -2,8 +2,8 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import flood1 from '../../../../ProjectPicture/FloodDetectionPrototype/03c50dd8-6942-4eae-ac8a-1ce37b17142a.jpg'
-import flood2 from '../../../../ProjectPicture/FloodDetectionPrototype/8c1e6d2c-64fc-4a03-b17a-47f4fe8cce13.jpg'
+import flood1 from '../../../ProjectPicture/FloodDetectionPrototype/03c50dd8-6942-4eae-ac8a-1ce37b17142a.jpg'
+import flood2 from '../../../ProjectPicture/FloodDetectionPrototype/8c1e6d2c-64fc-4a03-b17a-47f4fe8cce13.jpg'
 
 export default function FloodDetectionPrototype() {
   return (
