@@ -1,7 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { Menu, X, Github, Linkedin, Mail, ArrowRight } from 'lucide-react'
+import floodImage from '../ProjectPicture/FloodDetectionPrototype/03c50dd8-6942-4eae-ac8a-1ce37b17142a.jpg'
+import innImage from '../ProjectPicture/InnProject/InnProject.png'
 
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -172,22 +175,16 @@ export default function Portfolio() {
           <div className="space-y-8">
             {[
               {
-                title: 'E-Commerce Platform',
-                description: 'A modern, fully-featured e-commerce solution with real-time inventory management, sophisticated product filtering, and seamless checkout experience.',
-                tech: ['React', 'Next.js', 'Stripe', 'Tailwind CSS'],
-                link: '#'
+                title: 'Flood Detection Prototype',
+                description: 'A flood detection project with visual data analysis, alert previews, and real-time monitoring concept screens.',
+                tech: ['React', 'Next.js', 'Tailwind CSS', 'Data Visualization'],
+                image: floodImage,
               },
               {
-                title: 'Analytics Dashboard',
-                description: 'Real-time data visualization platform for tracking business metrics. Built with interactive charts, custom reporting, and export capabilities.',
-                tech: ['Next.js', 'TypeScript', 'Recharts', 'PostGres'],
-                link: '#'
-              },
-              {
-                title: 'Task Collaboration App',
-                description: 'Team productivity tool featuring real-time collaboration, task assignments, progress tracking, and integrated messaging for seamless communication.',
-                tech: ['React', 'Firebase', 'Socket.io', 'Tailwind CSS'],
-                link: '#'
+                title: 'Inn Project',
+                description: 'A hotel and inn interface concept with booking screens, guest flows, and high-fidelity design visuals.',
+                tech: ['Design Systems', 'Next.js', 'Tailwind CSS', 'UI/UX'],
+                image: innImage,
               },
             ].map((project, i) => (
               <div key={i} className="group">
@@ -210,7 +207,14 @@ export default function Portfolio() {
                         ))}
                       </div>
                     </div>
-                    <div className="h-56 bg-gradient-to-br from-primary/30 via-accent/20 to-secondary/10 rounded-lg border border-border/40 group-hover:border-primary/50 transition" />
+                    <div className="relative h-56 rounded-lg border border-border/40 overflow-hidden bg-card/40">
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
